@@ -122,12 +122,12 @@ protobuf {
 // Run "./gradlew publishReleasePublicationToLocalRepository" to generate release JARs locally
 publishing {
     publications {
-        val mavenGroupId = "net.newpipe"
-        val mavenArtifactId = "extractor"
+        val mavenGroupId = "com.github.suzhelan"
+        val mavenArtifactId = "NewPipeExtractor"
         fun MavenPublication.setupPOM() = pom {
             name = "NewPipe Extractor"
             description = "A library for extracting data from streaming websites, used in NewPipe"
-            url = "https://github.com/TeamNewPipe/NewPipeExtractor"
+            url = "https://github.com/suzhelan/NewPipeExtractor"
 
             licenses {
                 license {
@@ -137,16 +137,15 @@ publishing {
             }
 
             scm {
-                url = "https://github.com/TeamNewPipe/NewPipeExtractor"
-                connection = "scm:git:git@github.com:TeamNewPipe/NewPipeExtractor.git"
-                developerConnection = "scm:git:git@github.com:TeamNewPipe/NewPipeExtractor.git"
+                url = "https://github.com/suzhelan/NewPipeExtractor"
+                connection = "scm:git:git@github.com:suzhelan/NewPipeExtractor.git"
+                developerConnection = "scm:git:git@github.com:suzhelan/NewPipeExtractor.git"
             }
 
             developers {
                 developer {
-                    id = "newpipe"
-                    name = "Team NewPipe"
-                    email = "team@newpipe.net"
+                    id = "suzhelan"
+                    name = "suzhelan"
                 }
             }
         }
@@ -162,26 +161,7 @@ publishing {
 
             setupPOM()
         }
-        create<MavenPublication>("snapshot") {
-            groupId = mavenGroupId
-            artifactId = mavenArtifactId
-            version = "$lastCommitHash-SNAPSHOT"
-
-            afterEvaluate {
-                from(components["java"])
-            }
-
-            setupPOM()
-        }
         repositories {
-            maven {
-                name = "sonatype"
-                url = uri("https://central.sonatype.com/repository/maven-snapshots/")
-                credentials {
-                    username = System.getenv("SONATYPE_MAVEN_CENTRAL_USERNAME")
-                    password = System.getenv("SONATYPE_MAVEN_CENTRAL_PASSWORD")
-                }
-            }
             maven {
                 name = "local"
                 url = uri(layout.buildDirectory.dir("maven"))
@@ -190,8 +170,3 @@ publishing {
     }
 }
 
-signing {
-    setRequired(shouldSignCIRelease)
-    useInMemoryPgpKeys(ciSigningKey, ciSigningPassword)
-    sign(publishing.publications["snapshot"])
-}

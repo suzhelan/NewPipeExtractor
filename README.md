@@ -1,8 +1,8 @@
 # NewPipe Extractor
 
-[![CI](https://github.com/TeamNewPipe/NewPipeExtractor/actions/workflows/ci.yml/badge.svg?branch=dev&event=schedule)](https://github.com/TeamNewPipe/NewPipeExtractor/actions/workflows/ci.yml) [![JIT Pack Badge](https://jitpack.io/v/teamnewpipe/NewPipeExtractor.svg)](https://jitpack.io/#teamnewpipe/NewPipeExtractor) [JDoc](https://teamnewpipe.github.io/NewPipeExtractor/javadoc/) • [Documentation](https://teamnewpipe.github.io/documentation/)
+[![JIT Pack Badge](https://jitpack.io/v/suzhelan/NewPipeExtractor.svg)](https://jitpack.io/#suzhelan/NewPipeExtractor)
 
-NewPipe Extractor is a library for extracting things from streaming sites. It is a core component of [NewPipe](https://github.com/TeamNewPipe/NewPipe), but could be used independently.
+NewPipe Extractor is a library for extracting things from streaming sites. It is a core component of [NewPipe](https://github.com/suzhelan/NewPipe), but could be used independently.
 
 ## Usage
 
@@ -11,7 +11,7 @@ NewPipe Extractor is available at JitPack's Maven repo.
 If you're using Gradle, you could add NewPipe Extractor as a dependency with the following steps:
 
 1. Add `maven { url 'https://jitpack.io' }` to the `repositories` in your `build.gradle`.
-2. Add `implementation 'com.github.teamnewpipe:NewPipeExtractor:INSERT_VERSION_HERE'` to the `dependencies` in your `build.gradle`. Replace `INSERT_VERSION_HERE` with the [latest release](https://github.com/TeamNewPipe/NewPipeExtractor/releases/latest).
+2. Add `implementation 'com.github.suzhelan:NewPipeExtractor:INSERT_VERSION_HERE'` to the `dependencies` in your `build.gradle`. Replace `INSERT_VERSION_HERE` with the [latest release](https://github.com/suzhelan/NewPipeExtractor/releases/latest).
 3. If you are using tools to minimize your project, make sure to keep the files below, by e.g. adding the following lines to your proguard file:
  ```
 ## Rules for NewPipeExtractor
@@ -25,22 +25,6 @@ If you're using Gradle, you could add NewPipe Extractor as a dependency with the
 
 ### Testing changes
 
-#### Maven Central
-
-NewPipe Extractor's snapshots are available on Maven Central's snapshot repository. These versions
-are based on the commit's short hash (for e.g. `git rev-parse --short HEAD`) and are available for
-90 days since the date of publication/commit.
-
-```kotlin
-repositories {
-    maven(url = "https://central.sonatype.com/repository/maven-snapshots/")
-}
-
-dependencies {
-    implementation("net.newpipe:extractor:${LAST_COMMIT_SHORT_HASH}-SNAPSHOT")
-}
-```
-
 #### Local
 
 To test changes quickly you can build the library locally. A good approach would be to add something like the following to your `settings.gradle`:
@@ -48,7 +32,7 @@ To test changes quickly you can build the library locally. A good approach would
 ```groovy
 includeBuild('../NewPipeExtractor') {
     dependencySubstitution {
-        substitute module('com.github.teamnewpipe:NewPipeExtractor') with project(':extractor')
+        substitute module('com.github.suzhelan:NewPipeExtractor') with project(':extractor')
     }
 }
 ```
@@ -57,8 +41,8 @@ Another approach would be to use the local Maven repository, here's a gist of ho
 
 1. Add `mavenLocal()` in your project `repositories` list (usually as the first entry to give priority above the others).
 2. It's _recommended_ that you change the `version` of this library (e.g. `LOCAL_SNAPSHOT`).
-3. Run gradle's `ìnstall` task to deploy this library to your local repository (using the wrapper, present in the root of this project: `./gradlew install`)
-4. Change the dependency version used in your project to match the one you chose in step 2 (`implementation 'com.github.teamnewpipe:NewPipeExtractor:LOCAL_SNAPSHOT'`)
+3. Run gradle's `publishReleasePublicationToLocalRepository` task to deploy this library to your local repository (using the wrapper, present in the root of this project: `./gradlew publishReleasePublicationToLocalRepository`)
+4. Change the dependency version used in your project to match the one you chose in step 2 (`implementation 'com.github.suzhelan:NewPipeExtractor:LOCAL_SNAPSHOT'`)
 
 
 > [!TIP]
