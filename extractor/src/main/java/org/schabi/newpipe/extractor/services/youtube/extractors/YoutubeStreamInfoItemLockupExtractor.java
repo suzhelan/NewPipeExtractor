@@ -500,7 +500,7 @@ public class YoutubeStreamInfoItemLockupExtractor implements StreamInfoItemExtra
 
             // Fallback: search all rows. Handles livestreams with only 1 metadata row
             // in search/related/kiosk contexts, where that single row may contain the date.
-            if (cachedDateText.isEmpty()) {
+            if (!cachedDateText.isPresent()) {
                 cachedDateText = findMetadataPartInAllRows(text ->
                         text.endsWith("ago") || text.contains(PREMIERES_TEXT));
             }
