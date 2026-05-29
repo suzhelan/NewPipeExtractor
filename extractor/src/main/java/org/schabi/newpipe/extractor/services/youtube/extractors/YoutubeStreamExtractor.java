@@ -230,16 +230,23 @@ public class YoutubeStreamExtractor extends StreamExtractor {
 
         try { // Premiered 20 hours ago
             final var localization = new Localization("en");
-            return TimeAgoPatternsManager.getTimeAgoParserFor(localization).parse(dateText);
+            return Objects.requireNonNull(TimeAgoPatternsManager.getTimeAgoParserFor(localization)).parse(dateText);
         } catch (final ParsingException e) {
             // Try other patterns first
         }
 
-        return parseOptionalDate(dateText, "MMM dd, yyyy")
-                .or(() -> parseOptionalDate(dateText, "dd MMM yyyy"))
+        Optional<LocalDate> optionalDate =
+                parseOptionalDate(dateText, "MMM dd, yyyy");
+
+        if (optionalDate.isEmpty()) {
+            optionalDate = parseOptionalDate(dateText, "dd MMM yyyy");
+        }
+
+        return optionalDate
                 .map(date -> new DateWrapper(date.atStartOfDay(), true))
                 .orElseThrow(() ->
-                    new ParsingException("Could not parse upload date \"" + dateText + "\""));
+                        new ParsingException(
+                                "Could not parse upload date \"" + dateText + "\""));
     }
 
     private Optional<LocalDate> parseOptionalDate(final String date, final String pattern) {
@@ -596,7 +603,7 @@ public class YoutubeStreamExtractor extends StreamExtractor {
         final JsonObject videoOwnerRenderer = JsonUtils.getObject(videoSecondaryInfoRenderer,
                 "owner.videoOwnerRenderer");
 
-        String subscriberCountText = null;
+        String subscriberCountText;
         if (videoOwnerRenderer.has("subscriberCountText")) {
             subscriberCountText = getTextFromObject(videoOwnerRenderer
                 .getObject("subscriberCountText"));
