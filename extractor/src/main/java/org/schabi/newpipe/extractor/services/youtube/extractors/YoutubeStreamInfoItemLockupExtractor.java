@@ -343,7 +343,7 @@ public class YoutubeStreamInfoItemLockupExtractor implements StreamInfoItemExtra
         // in search/related/kiosk contexts, where that single row contains views.
         // Also handles channel tabs where the info row may not contain views
         // (e.g. section headers or 0-viewer livestreams).
-        if (optTextContent.isEmpty()) {
+        if (!optTextContent.isPresent()) {
             optTextContent = findMetadataPartInAllRows(text -> {
                 final String lower = text.toLowerCase();
                 return lower.matches(".*\\bviews?\\b.*") || lower.contains("watching")
