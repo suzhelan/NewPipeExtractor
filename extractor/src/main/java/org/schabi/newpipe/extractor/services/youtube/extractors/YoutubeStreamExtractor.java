@@ -238,7 +238,7 @@ public class YoutubeStreamExtractor extends StreamExtractor {
         Optional<LocalDate> optionalDate =
                 parseOptionalDate(dateText, "MMM dd, yyyy");
 
-        if (optionalDate.isEmpty()) {
+        if (!optionalDate.isPresent()) {
             optionalDate = parseOptionalDate(dateText, "dd MMM yyyy");
         }
 
